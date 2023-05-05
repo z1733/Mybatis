@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+    <!--引入properties文件，此时就可以${属性名}的方式访问属性值-->
+    <!--    <properties resource="jdbc.properties"/>-->
+
+    <settings>
+<!--        将自动映射设置为驼峰-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
+    <!--设置类型别名-->
+    <typeAliases>
+        <package name="com.ztt.pojo"/>
+    </typeAliases>
+
+
+    <!--environments：配置多个连接数据库的环境-->
+    <environments default="development">
+
+        <environment id="development">
+            <!--transactionManager：设置事务管理方式-->
+            <transactionManager type="JDBC"/>
+            <!--dataSource：配置数据源，使用使用数据库连接池缓存数据库连接-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/myemployees"/>
+                <property name="username" value="root"/>
+                <property name="password" value="z1733033"/>
+            </dataSource>
+        </environment>
+
+    </environments>
+
+    <mappers>
+        <package name="com.ztt.mapper"/>
+    </mappers>
+</configuration>

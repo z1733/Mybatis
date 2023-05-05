@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ztt.mapper.ParameterMapper">
+
+<!--    List<Books> getAllBooks();-->
+    <select id="getAllBooks" resultType="books">
+        select *
+        from books;
+    </select>
+<!--    Books getUsernameBooks();-->
+    <select id="getUsernameBooks" resultType="books">
+        <!--select *
+        from books where bookName= #{bookname};-->
+
+        select * from books where bookName= '${name}';
+    </select>
+<!--    Books getByBooks(String bookname,int bookCount);-->
+<select id="getByBooks" resultType="books">
+    select *
+    from books where bookName = #{arg0} and bookCounts = #{arg1};
+</select>
+<!--    Books getByMap(Map<String, Objects> map);-->
+    <select id="getByMap" resultType="books">
+        select *
+        from books where bookName = #{bookName} and bookCounts = #{bookCounts};
+    </select>
+
+<!--    int setByBooks(Books books);-->
+    <insert id="setByBooks">
+        insert into books values (null,#{bookName},#{bookCounts},#{detail});
+    </insert>
+
+<!--    Books getByParam(@Param("bookName") String bookName,@Param("bookCount") int bookCount);-->
+    <select id="getByParam" resultType="books">
+        select * from books where bookName = #{bookName} and bookCounts = #{bookCount};
+    </select>
+</mapper>

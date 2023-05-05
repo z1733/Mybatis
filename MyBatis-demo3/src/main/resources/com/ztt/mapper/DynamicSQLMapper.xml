@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ztt.mapper.DynamicSQLMapper">
+
+    <cache/>
+
+<!--   List<jobs> deptList(jobs jobs);-->
+    <select id="deptList" resultType="jobs">
+        select *
+        from jobs
+        <trim prefix="where" suffixOverrides="and|or">
+
+            <if test="job_title !=null and job_title != '' ">
+                job_title = #{job_title}
+            </if>
+            <if test="min_salary !=null and min_salary !=''">
+                and min_salary = #{min_salary}
+            </if>
+            <if test="max_salary !=null and max_salary !=''">
+                and max_salary = #{max_salary}
+            </if>
+        </trim>
+    </select>
+
+    <!--    List<jobs> jobs_list(jobs jobs);-->
+    <select id="jobs_list" resultType="jobs">
+        select *
+        from jobs
+        <where>
+            <choose>
+                <when test="job_title !=null and job_title !=''">
+                    job_title = #{job_title}
+                </when>
+
+                <when test="min_salary !=null and min_salary !=''">
+                    min_salary = #{min_salary}
+                </when>
+
+                <when test="max_salary !=null and max_salary !=''">
+                    max_salary = #{max_salary}
+                </when>
+                <otherwise>
+                    job_id = 'AC_ACCOUNT'
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+</mapper>

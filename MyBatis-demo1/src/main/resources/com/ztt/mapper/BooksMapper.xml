@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ztt.mapper.BooksMapper">
+    <insert id="insert">
+        insert into books(bookName, bookCounts, detail) values ('C#',8,'拉控件');
+    </insert>
+
+<!--    int updateBooks();-->
+    <update id="updateBooks">
+        update books
+        set bookName='C', bookCounts=15, detail='入门到如土'
+        where bookID =8;
+    </update>
+
+<!--    int deleteBooks();-->
+    <delete id="deleteBooks">
+        delete
+        from books
+        where bookID=8;
+    </delete>
+<!--    List<Books> books();-->
+    <select id="books" resultType="books">
+        select *
+        from books;
+    </select>
+
+<!--    Books getBooksId(@Param("BookId") int BookId);-->
+    <select id="getBooksId" resultType="books">
+        select *
+        from books where bookId=1;
+    </select>
+</mapper>

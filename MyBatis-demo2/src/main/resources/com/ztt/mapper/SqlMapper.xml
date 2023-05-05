@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ztt.mapper.SqlMapper">
+
+<!--    List<employees> list(@Param("first_name") String first_name);-->
+    <select id="list" resultType="employees">
+        <!--  select *
+         from employees where first_name like '%${first_name}%';-->
+        <!-- select * from employees where first_name like concat('%',#{first_name},'%');-->
+        select * from employees where  first_name like "%"#{first_name}"%";
+      </select>
+
+<!--    int deleteById(@Param("employee_id") Integer employee_id);-->
+    <delete id="deleteById">
+        delete
+        from employees
+        where employee_id in (${ids});
+    </delete>
+
+<!--    List<employees> getEmpByID(@Param("tableName") String tableName);-->
+    <select id="getEmpByID" resultType="employees">
+        select *
+        from ${tableName};
+    </select>
+
+<!--    void insertEmp(employees employees);-->
+    <insert id="insertEmp">
+        insert into employees values (null,)
+    </insert>
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ztt.mapper.EmpployeesMapper">
+
+    <resultMap id="empMap" type="employees">
+        <id property="employee_id" column="employee_id"></id>
+        <result property="first_name" column="firstName"></result>
+        <result property="last_name" column="last_name"></result>
+        <result property="email" column="email"></result>
+        <result property="phone_number" column="phone_number"></result>
+        <result property="job_id" column="job_id"></result>
+        <result property="salary" column="salary"></result>
+        <result property="commission_pct" column="commissionPct"></result>
+        <result property="department_id" column="department_id"></result>
+        <result property="hiredate" column="hiredate"></result>
+    </resultMap>
+
+    <select id="getEmpAll" resultMap="empMap">
+        select *
+        from employees;
+    </select>
+<!--    List<employees> getEmpAll();-->
+<!--    <select id="getEmpAll" resultType="employees">-->
+<!--        select *-->
+<!--        from employees;-->
+<!--    </select>-->
+
+<!--    employees getEmpAndDept(@Param("employee_id") Integer employee_id);-->
+<!--    <resultMap id="getEmpAndDeptOne" type="employees">-->
+<!--        <id property="employee_id" column="employee_id"></id>-->
+<!--        <result property="first_name" column="firstName"></result>-->
+<!--        <result property="last_name" column="last_name"></result>-->
+<!--        <result property="email" column="email"></result>-->
+<!--        <result property="phone_number" column="phone_number"></result>-->
+<!--        <result property="job_id" column="job_id"></result>-->
+<!--        <result property="salary" column="salary"></result>-->
+<!--        <result property="commission_pct" column="commissionPct"></result>-->
+<!--        <result property="department_id" column="department_id"></result>-->
+<!--        <result property="hiredate" column="hiredate"></result>-->
+<!--        <result property="departments.department_name" column="department_name"></result>-->
+<!--        <result property="departments.managerid" column="manager_id"></result>-->
+<!--        <result property="departments.location_id" column="location_id"></result>-->
+<!--    </resultMap>-->
+
+    <resultMap id="getEmpAndDeptTwo" type="employees">
+        <id property="employee_id" column="employee_id"></id>
+        <result property="first_name" column="firstName"></result>
+        <result property="last_name" column="last_name"></result>
+        <result property="email" column="email"></result>
+        <result property="phone_number" column="phone_number"></result>
+        <result property="job_id" column="job_id"></result>
+        <result property="salary" column="salary"></result>
+        <result property="commission_pct" column="commissionPct"></result>
+        <result property="department_id" column="department_id"></result>
+        <result property="hiredate" column="hiredate"></result>
+        <association property="departments" javaType="departments">
+            <id property="department_id" column="department_id"></id>
+            <result property="department_name" column="department_name"></result>
+            <result property="manager_id" column="manager_id"></result>
+            <result property="location_id" column="location_id"></result>
+        </association>
+    </resultMap>
+    <select id="getEmpAndDept" resultMap="getEmpAndDeptTwo">
+        select *
+        from employees e left join departments d on d.department_id = e.department_id where e.employee_id = #{employee_id};
+    </select>
+
+
+    <resultMap id="getEmpAndDeptTors" type="employees">
+        <id property="employee_id" column="employee_id"></id>
+        <result property="first_name" column="firstName"></result>
+        <result property="last_name" column="last_name"></result>
+        <result property="email" column="email"></result>
+        <result property="phone_number" column="phone_number"></result>
+        <result property="job_id" column="job_id"></result>
+        <result property="salary" column="salary"></result>
+        <result property="commission_pct" column="commissionPct"></result>
+        <result property="department_id" column="department_id"></result>
+        <result property="hiredate" column="hiredate"></result>
+        <association property="departments"
+                     select="com.ztt.mapper.DepartmentsMapper.getEmpAndDeptTwe"
+                     column="department_id"
+                     fetchType="eager"
+        ></association>
+    </resultMap>
+
+<!--    employees getEmpAndDeptSearTor(@Param("employee_id") Integer employee_id);-->
+    <select id="getEmpAndDeptSearTor" resultMap="getEmpAndDeptTors">
+        select *
+        from employees where employee_id=#{employee_id};
+    </select>
+
+<!--    employees getDeprById(@Param("department_id") Integer department_id);-->
+    <select id="getDeprById" resultType="employees">
+        select *
+        from employees where department_id=#{department_id};
+    </select>
+</mapper>
